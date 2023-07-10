@@ -1,7 +1,8 @@
 package models
 
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * 3Д модель для отрисовки в окне
@@ -11,7 +12,6 @@ import androidx.compose.ui.graphics.Color
  * @property vertices массив вершин меша
  * @property edges массив пар индексов вершин из [vertices] - задает набор линий
  */
-@Immutable
 data class Mesh(
     val color: Color,
     val strokeWidth: Float,
@@ -24,7 +24,15 @@ data class Mesh(
  *
  * @param v три угла в радианах
  */
-fun Mesh.rotate(v: Vertex) = copy(vertices = vertices.map { it.rotate(v) })
+fun Mesh.rotate(v: Vertex): Mesh {
+    val cosX = cos(v.x)
+    val sinX = sin(v.x)
+    val cosY = cos(v.y)
+    val sinY = sin(v.y)
+    val cosZ = cos(v.z)
+    val sinZ = sin(v.z)
+    return copy(vertices = vertices.map { it.rotate(cosX, sinX, cosY, sinY, cosZ, sinZ) })
+}
 
 /**
  * Ось ОX на экране

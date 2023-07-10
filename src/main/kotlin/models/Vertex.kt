@@ -1,6 +1,5 @@
 package models
 
-import androidx.compose.runtime.Immutable
 import com.squareup.moshi.JsonClass
 import kotlin.math.cos
 import kotlin.math.sin
@@ -8,7 +7,6 @@ import kotlin.math.sin
 /**
  * Обычная вершинка в 3д
  */
-@Immutable
 @JsonClass(generateAdapter = true)
 data class Vertex(
     val x: Double,
@@ -21,16 +19,15 @@ data class Vertex(
  *
  * @param v три угла в радианах
  */
-fun Vertex.rotate(v: Vertex): Vertex {
-    val cosA = cos(v.x)
-    val sinA = sin(v.x)
-    val cosB = cos(v.y)
-    val sinB = sin(v.y)
-    val cosY = cos(v.z)
-    val sinY = sin(v.z)
-    val rX = cosB * cosY * x - sinY * cosB * y + sinB * z
-    val rY = (sinA * sinB * cosY + sinY * cosA) * x + (cosA * cosY - sinA * sinB * sinY) * y - sinA * cosB * z
-    val rZ = (sinA * sinY - sinB * cosA * cosY) * x + (sinA * cosY + sinB * sinY * cosA) * y + cosA * cosB * z
+fun Vertex.rotate(v: Vertex): Vertex = rotate(cos(v.x), sin(v.x), cos(v.y), sin(v.y), cos(v.z), sin(v.z))
+
+/**
+ * Повернуть вершинку
+ */
+fun Vertex.rotate(cosX: Double, sinX: Double, cosY: Double, sinY: Double, cosZ: Double, sinZ: Double): Vertex {
+    val rX = cosY * cosZ * x - sinZ * cosY * y + sinY * z
+    val rY = (sinX * sinY * cosZ + sinZ * cosX) * x + (cosX * cosZ - sinX * sinY * sinZ) * y - sinX * cosY * z
+    val rZ = (sinX * sinZ - sinY * cosX * cosZ) * x + (sinX * cosZ + sinY * sinZ * cosX) * y + cosX * cosY * z
     return Vertex(rX, rY, rZ)
 }
 

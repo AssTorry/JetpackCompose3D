@@ -5,7 +5,9 @@ import androidx.compose.ui.geometry.Offset
 import models.Mesh
 import models.Vertex
 import models.rotate
+import java.lang.Math.toRadians
 
+@Immutable
 class MainViewModel(
     private val meshList: List<Mesh>
 ) {
@@ -36,14 +38,9 @@ class MainViewModel(
         _zoomState.value = value
     }
 
-    private fun List<Mesh>.rotate(angle: Vertex): List<Mesh> = map {
-        it.rotate(
-            Vertex(
-                Math.toRadians(angle.x),
-                Math.toRadians(angle.y),
-                Math.toRadians(angle.z)
-            )
-        )
+    private fun List<Mesh>.rotate(angle: Vertex): List<Mesh> {
+        val radians = Vertex(toRadians(angle.x), toRadians(angle.y), toRadians(angle.z))
+        return map { it.rotate(radians) }
     }
 
     private companion object {

@@ -6,5 +6,5 @@ pluginManagement {
     }
     
 }
-rootProject.name = "Cube"
+rootProject.name = "JetpackCompose3D"
 

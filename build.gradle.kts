@@ -33,7 +33,7 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "Cube"
+            packageName = "JetpackCompose3D"
             packageVersion = "1.0.0"
         }
     }
